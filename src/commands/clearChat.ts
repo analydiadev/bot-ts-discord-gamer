@@ -1,10 +1,10 @@
-import { ApplicationCommandOptionType, BaseGuildTextChannel, CommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType, CommandInteraction, NewsChannel, TextChannel } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
 class clearChat {
     @Slash({ description: "limpar canal", name: "limpar" })
-    clearChannel(
+    async clearChannel(
         @SlashOption({
             description: "Quantidade de mensagens até 100",
             name: "mensagem",
@@ -12,13 +12,18 @@ class clearChat {
             type: ApplicationCommandOptionType.Number,
         })
         mensagem: number,
-        deleteMessage: BaseGuildTextChannel,
         interaction: CommandInteraction,
     ) {
-        console.log(mensagem);
-        //@ ts-ignore
-        deleteMessage.bulkDelete(5)
-        interaction.reply({ content: `Canal ${interaction.channel} limpo`, ephemeral: true })
+        if (mensagem > 100 || mensagem < 0) {
+            interaction.reply({ content: "A quantidade de mensagens não pode ser maior que 100 ou menor que 0", ephemeral: true })
+        }
+        const channel = interaction.channel as NewsChannel
+        if (!channel) {
+            interaction.reply({ content: "Não é um canal válido", ephemeral: true })
+        }
+
+        const msg = await channel.bulkDelete(mensagem)
+        interaction.reply({ content: `O canal ${interaction.channel} teve ${mensagem} mensagens apagadas`, ephemeral: true })
 
     }
 }
