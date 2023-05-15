@@ -1,4 +1,4 @@
-import { Client, CommandInteraction } from "discord.js";
+import { ActivityType, Client, CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 
 @Discord()
@@ -12,7 +12,9 @@ class Ping {
         // console.log(format);
         // console.log(Date.parse(format));
         
-        interaction.reply({ content: `Tenha uma excelente semana ${interaction.user.username}, seu ping é: (${Date.now() - interaction.createdTimestamp}ms)`, ephemeral: true })
+        interaction.reply({ content: `Tenha uma excelente semana ${interaction.user.username}, seu ping é: (${Date.now() - interaction.createdTimestamp}ms)`, ephemeral: true }) 
+        interaction.client.user.setPresence({activities: [{name: "ESTOU TE VENDO!", type: ActivityType.Watching}], status: "online"})
+
     }
 }
 
