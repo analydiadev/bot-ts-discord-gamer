@@ -12,14 +12,14 @@ class giveWays {
 
         const titulo = interaction.message.embeds[0].title
 
-        // if (users.includes(interaction.user.id)) {
+        if (users.includes(interaction.user.id)) {
             users.push(interaction.user.id)
             
             await interaction.user.send(`Você está participando do sorteio ${titulo}`)
-        // }
-        // else {
-        //     interaction.reply({ content: `Você já está participando do sorteio ${titulo}`, ephemeral: true })
-        // }
+        }
+        else {
+            interaction.reply({ content: `Você já está participando do sorteio ${titulo}`, ephemeral: true })
+        }
 
     }
     @Slash({ description: "cargos no servidor", name: "sorteio" })
