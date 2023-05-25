@@ -1,8 +1,9 @@
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, EmbedBuilder, Message, MessageActionRowComponentBuilder } from "discord.js";
-import { ButtonComponent, Discord, Once, Slash, SlashGroup, SlashOption } from "discordx";
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, EmbedBuilder, MessageActionRowComponentBuilder } from "discord.js";
+import { ButtonComponent, Discord,Slash, SlashOption } from "discordx";
 
 
 var users: string[] = []
+var win: string[] = []
 
 @Discord()
 class giveWays {
@@ -14,9 +15,9 @@ class giveWays {
 
         if (users.includes(interaction.user.id)) {
             users.push(interaction.user.id)
-            
             await interaction.user.send(`Você está participando do sorteio ${titulo}`)
         }
+
         else {
             interaction.reply({ content: `Você já está participando do sorteio ${titulo}`, ephemeral: true })
         }
@@ -82,25 +83,50 @@ class giveWays {
 
         const menssage = (await interaction.reply({ embeds: [embedRecognition], components: [buttonRow], ephemeral: true }))
 
-        for (let i = tempo; i >= 0; i--) {
-            embedRecognition.setFields(
-                { name: "quantidade de vencedores", value: `${vencedor}` },
-                { name: "O sorteio acabará em", value: `${i}` })
-
-            await menssage?.edit({ embeds: [embedRecognition] })
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-        }
+        let seconds = 80
         
-        embedRecognition.setFields(
-            { name: "O sorteio acabará em", value: "O sorteio acabou" })
-            await menssage?.edit({ embeds: [embedRecognition] })
-            
-            var randomWinner;
+        for (let minutes = tempo; minutes >= 0; minutes--) {
 
-            for(let winners = 0; winners < vencedor; winners++){
-                randomWinner=  users[Math.floor(Math.random()  * users.length)]
-                interaction.channel?.send(`O vencedor  do sorteio é: <@${randomWinner}>`)
+            for (let secs = 60; secs >= 0; secs--) {
+                setInterval(function() {
+                    secs-=20
+                }, 2000);     
+
+                seconds -= 20
+                if(seconds < 0)seconds = 60
+                
+                console.log(seconds);
+                
+                embedRecognition.setFields(
+                    { name: "quantidade de vencedores", value: `${vencedor}` },
+                    { name: "O sorteio acabará em", value: `${minutes} : ${seconds}` })
+                    await menssage?.edit({ embeds: [embedRecognition] })
+                    await new Promise((resolve) => setTimeout(resolve, 2000))
             }
+            if (minutes == 0) {
+                embedRecognition.setFields(
+                    { name: "O sorteio acabará em", value: "O sorteio acabou" })
+                await menssage?.edit({ embeds: [embedRecognition] })
+            }
+        }
+        var randomWinner;
+
+        for (let winners = 0; winners < vencedor; winners++) {
+            randomWinner = users[Math.floor(Math.random() * users.length)]
+            win.push(randomWinner)
+
+        }
+            
+        if (win.length < vencedor) {
+            interaction.channel?.send(`O sorteio ${titulo} foi cancelado pois não há membros participantes suficiente.`)
+        }
+        else {
+        let getId = interaction.client.users.cache.get(`${win}`);
+        console.log(getId);
+
+        await getId?.send(`Parabéns!!! 🥳🥳🥳 você ganhou o sorteio **${titulo}** do servidor ${interaction.guild?.name}`)
+
+        }
     }
 
 }
