@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder, GuildMe
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
-class banUser {
+class BanUser {
    @Slash({ description: "ban membro" })
    async ban(
       @SlashOption({

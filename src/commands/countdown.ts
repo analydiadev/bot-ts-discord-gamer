@@ -3,7 +3,7 @@ import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder, TextCha
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
-class countdown {
+class Countdown {
     @Slash({ description: "contagem regresiva", name: "contagem-regresiva" })
     async countdown(
         @SlashOption({

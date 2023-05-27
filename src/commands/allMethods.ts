@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteracti
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
-class allMethods {
+class AllMethods {
     @Slash({ description: "comprimentando" })
     comprimentando(
         @SlashOption({

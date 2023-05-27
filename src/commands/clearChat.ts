@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, CommandInteraction, NewsChannel, TextChan
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
-class clearChat {
+class ClearChat {
     @Slash({ description: "limpar canal", name: "limpar" })
     async clearChannel(
         @SlashOption({

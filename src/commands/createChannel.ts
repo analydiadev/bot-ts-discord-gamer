@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, AutocompleteInteraction, ChannelType, Com
 import { Discord, Slash, SlashOption } from "discordx";
 
 @Discord()
-class clearChat {
+class ClearChat {
     @Slash({ description: "criar canal" })
     create(
         @SlashOption({

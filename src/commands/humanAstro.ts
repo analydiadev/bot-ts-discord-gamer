@@ -2,7 +2,7 @@ import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 
 @Discord()
-class Example {
+class WhoAmI {
   @Slash({ description: "Quem sou eu?"})
   eusou(
    @SlashChoice({name:"Humano", value: "Humano"})
